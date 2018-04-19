@@ -1,0 +1,92 @@
+{% load static %}
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>uHost</title>
+        <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+        <link rel="stylesheet" href="{% static "home/css/shared.css" %}">
+        <link rel="stylesheet" href="{% static "home/css/main.css" %}">
+    </head>
+    
+    <body>
+        <header class="main-header">
+            <div>
+                <a href="index.html" class="main-header__brand">
+                    uHost
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul class="main-nav__items">
+                    <li class="main-nav__item">
+                        <a href="packages/index.html">Packages</a>
+                    </li>
+                    <li class="main-nav__item">
+                        <a href="customers/index.html">Customers</a>
+                    </li>
+                    <li class="main-nav__item main-nav__item--cta">
+                        <a href="start-hosting/index.html">Start Hosting</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+                {% if monday_rider %}
+                <h1>there is a monday rider</h1>
+                {% endif %}
+            <ul>
+            {% if monday %}
+                Monday training: 
+                {% for training in monday %}
+                    <li class="training__item">{{ training }}
+                    {% if monday_rider %}
+                    there is a monday rider
+                    {% endif %}
+                    </li>
+                    {% for rider in monday_rider %}
+                        <li>{{ rider }}</li>
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+            </ul>
+            <ul>
+            {% if tuesday %}
+            tuesday training: 
+                {% for training in tuesday %}
+                    <li class="training__item">{{ training }}</li>
+                {% endfor %}
+            {% endif %}
+            </ul>
+            <ul>
+            {% if wednesday %}
+            wednesday training: 
+                {% for training in wednesday %}
+                    <li class="training__item">{{ training }}</li>
+                {% endfor %}
+            {% endif %}
+            </ul>
+            <ul>
+            {% if thursday %}
+            thursday training: 
+                {% for training in thursday %}
+                    <li class="training__item">{{ training }}</li>
+                {% endfor %}
+            {% endif %}
+            </ul>
+        </main>
+        <footer class="main-footer">
+            <nav>
+                <ul class="main-footer__links">
+                    <li class="main-footer__link">
+                        <a href="#">Support</a>
+                    </li>
+                    <li class="main-footer__link">
+                        <a href="#">Terms of Use</a>
+                    </li>
+                </ul>
+            </nav>
+        </footer>
+    </body>
+</html>
