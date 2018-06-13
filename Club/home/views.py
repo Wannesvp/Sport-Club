@@ -45,6 +45,7 @@ def event(request):
     get_event_types = Events.objects.only('event_type')
 
     # if filters applied then get parameter and filter based on condition else return object
+    # code from graduaid app.
     if request.GET:  
         event_arr = []
         if request.GET.get('event_type') == "all":
