@@ -27,7 +27,7 @@ body {
 
 .main-nav {
     display: inline-block;
-    width: calc(100% - 90px);
+    width: calc(100% - 500px);
     text-align: right;
     vertical-align: middle;
 }

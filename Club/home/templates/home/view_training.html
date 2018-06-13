@@ -1,64 +1,29 @@
+{% extends "home/base.html" %}
 {% load static %}
 
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>uHost</title>
-        <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
-        <link rel="stylesheet" href="{% static "home/css/shared.css" %}">
-        <link rel="stylesheet" href="{% static "home/css/main.css" %}">
-    </head>
-    
-    <body>
-        <header class="main-header">
-            <div>
-                <a href="index.html" class="main-header__brand">
-                    uHost
-                </a>
-            </div>
-            <nav class="main-nav">
-                <ul class="main-nav__items">
-                    <li class="main-nav__item">
-                        <a href="packages/index.html">Packages</a>
-                    </li>
-                    <li class="main-nav__item">
-                        <a href="customers/index.html">Customers</a>
-                    </li>
-                    <li class="main-nav__item main-nav__item--cta">
-                        <a href="start-hosting/index.html">Start Hosting</a>
-                    </li>
-                </ul>
-            </nav>
-        </header>
-        <main>
+{% block title %} All trainings {% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <ul>
+        <li>name: {{ training.name }}</li>
+        <li>date: {{ training.date }}</li>
+        <li>start time: {{ training.start_time }}</li>
+        <li>location: {{ training.location }}</li>
+        <li>riders:
             <ul>
-                <li>name: {{ training.name }}</li>
-                <li>date: {{ training.date }}</li>
-                <li>start time: {{ training.start_time }}</li>
-                <li>location: {{ training.location }}</li>
-                <li>riders:
-                    <ul>
-                    {% for rider in riders %}
-                        <li>{{ rider }}</li>
-                    {% endfor %}
-                    </ul>
-                </li>
-                <li></li>
+            {% for rider in riders %}
+                <li>{{ rider }}</li>
+            {% endfor %}
             </ul>
-        </main>
-        <footer class="main-footer">
-            <nav>
-                <ul class="main-footer__links">
-                    <li class="main-footer__link">
-                        <a href="#">Support</a>
-                    </li>
-                    <li class="main-footer__link">
-                        <a href="#">Terms of Use</a>
-                    </li>
-                </ul>
-            </nav>
-        </footer>
-    </body>
-</html>
+        </li>
+        <li></li>
+        </ul>
+</div>    
+
+{% endblock content %}
+
+{% load static %}
+
+

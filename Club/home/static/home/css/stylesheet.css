@@ -1,0 +1,204 @@
+body{
+  background-color: #DAF1E4 ; /*grey  ; */
+  /*  #8CDD81; */
+  /* background-color:rgb(102,204,146); */
+  /* background-color: rgb(46,139,87); */
+  font-family:'Open Sans', serif!important;
+}
+
+/* navbar */
+/* change background color and adjust radius of edges*/
+/* !!very important to include when useing bootstrap theme CDN !! otherwise change of color won't work */
+.navbar{
+    background-image: none;
+}
+
+.navbar-default{
+  background-color: #53A576 ; /* rgb(46,139,87); */
+  border-radius:0px;
+  border: 0px;
+}
+
+/* change linsk of the navbar to black color instead of blue */
+.navbar-custom .navbar-nav>li>a {
+    color: black;
+}
+
+/* change height of nabvar-brand*/
+.navbar-brand {
+  padding-right:25px;
+  height: 60px;
+  line-height: 30px;
+  color:black;
+  font-size:30px;
+}
+
+/* change color of navbar text - normally this is a image file */
+.navbar-default .navbar-brand:hover {
+    color: black;
+}
+
+.navbar-brand:hover:focus{
+  color:black;
+}
+
+.navbar-brand:visited{
+  color:black;
+}
+
+/* change height of the navbar */
+.navbar-nav {
+  padding-top: 5px;
+}
+
+/* change height of the li of the navbar */
+.navbar-custom>li>a{
+  padding:0px 10px;
+  line-height: 50px;
+  color:black;
+}
+
+.navbar-right>li>a{
+   padding:5px;
+}
+
+/* remove standard bootstrap change of backgroundcolor during hover*/
+ul.nav li a:hover, ul.nav li a:active,  ul.nav li a:focus {
+  background-color: #53A576;  /* rgb(46,139,87); */
+}
+
+/* remove the line when in focus and active */
+.btn-header{
+ border:0px solid transparent; /* this was 1px earlier */
+ background-color: #4D7C92; /* rgb(46,98,138); */
+ color:white;
+ padding:10px;
+}
+
+.btn-header:hover{
+  background-color: white;
+  color: #4D7C92; /* rgb(46,98,138); */
+}
+
+.btn-header:focus{
+  border:0px solid transparent;
+  outline:none;
+  background-color: #4D7C92; /* rgb(46,98,138); */
+  color:white;
+}
+
+.btn:active:focus, .btn:focus {
+    outline: none;
+    outline-offset: 0px;
+}
+
+
+/* */ /* */ /**/ /**/
+/* main content */
+/* side navigator styling */
+.side-nav{
+  background-color:#ADC8D5;
+  border-radius:5px;
+  padding-top:10px;
+}
+
+/* profile content styling*/
+.profile-content{
+  background-color:#ADC8D5;
+  border-radius:5px;
+}
+
+#profile-picture{
+  margin-top:13px;
+}
+
+.profile-tab{
+  background-color:#4F7C92;
+  border-radius: 5px;
+}
+
+/* styling van link which contains the li*/
+.profile-tab a{
+  text-decoration: none;
+  color:black;
+  text-align:center;
+}
+
+/* remove bullet points from ul*/
+ul.tab{
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+/* adjust height of tab */
+.tab li {
+  line-height: 40px;
+  border-radius:5px;
+}
+
+.tab li:hover{
+  background-color:#194A61;
+  color: white;
+}
+
+.tab li:active{
+  background-color:#021F2D;
+}
+
+/* style the tab-content */
+.profile-tab-content{
+  background-color:#799EB0;
+  padding-left:20px;
+  border-radius:5px;
+}
+
+.tabcontent {
+    display: none;
+}
+
+.tab .active{
+  background-color:#194A61;
+}
+
+.main-footer {
+  background: lightgray;
+  padding: 32px;
+  margin-top: 48px;
+}
+
+.main-footer__links {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+  text-align: center;
+}
+
+.main-footer__link {
+  display: inline-block;
+  margin: 0 16px;
+}
+
+.main-footer__link a {
+  color: white;
+  text-decoration: none;
+}
+
+.main-footer__link a:hover,
+.main-footer__link a:active {
+  color: #ccc;
+}
+
+.training__items {
+  list-style: none;
+}
+
+.training__item {
+  display: inline-block;
+  width: 15%;
+  height: 150px;
+  background: #ccc;
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+}
