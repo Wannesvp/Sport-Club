@@ -1,0 +1,63 @@
+{% load static %}
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>uHost</title>
+        <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+        <link rel="stylesheet" href="{% static "home/css/shared.css" %}">
+        <link rel="stylesheet" href="{% static "home/css/main.css" %}">
+
+        <link rel='stylesheet' href="{% static "home/lib/fullcalendar.css" %}" />
+        <script src="{% static "home/lib/jquery-3.3.1.min.js" %}"></script>
+        <script src="{% static "home/lib/moment.js" %} "></script>
+        <script src="{% static "home/lib/fullcalendar.js" %}"></script>
+
+        <script>
+        $(document).ready(function() {
+            $('#calendar').fullCalendar({
+                defaultDate: '2018-04-20',
+                editable: true,
+                eventLimit: true, // allow "more" link when too many events
+                events: [
+                    {% for i in events %}
+                    {
+                        title: "{{ i.event_name}}",
+                        start: '{{ i.start_date|date:"Y-m-d" }}',
+                        end: '{{ i.end_date|date:"Y-m-d" }}',
+                        url: "/training-detail/2/",
+                    },
+                    {% endfor %}
+                ]
+            });
+        });
+        </script>
+
+    </head>
+    
+    <body>
+        <header class="main-header">
+           
+        </header>
+        <main>
+            <div style="height:80px;"></div>
+            <div style="width:60%; margin-left: 280px;">
+                <div id="calendar"></div>
+            </div>
+        </main>
+        <footer class="main-footer">
+            <nav>
+                <ul class="main-footer__links">
+                    <li class="main-footer__link">
+                        <a href="#">Support</a>
+                    </li>
+                    <li class="main-footer__link">
+                        <a href="#">Terms of Use</a>
+                    </li>
+                </ul>
+            </nav>
+        </footer>
+    </body>
+</html>

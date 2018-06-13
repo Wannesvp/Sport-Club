@@ -1,3 +1,7 @@
+body {
+    background-color: lightgrey;
+}
+
 .training__items {
     list-style: none;
 }
