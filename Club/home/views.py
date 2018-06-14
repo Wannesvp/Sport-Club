@@ -67,3 +67,6 @@ def display_calendar(request):
 
     }
     return render(request,'home/calendar.html',context)
+
+def display_profile(request):
+    return render(request, 'home/profile.html')

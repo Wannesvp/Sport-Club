@@ -1,0 +1,86 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+{% block title %} Calendar {% endblock title %}
+
+
+{% block head %}
+{% endblock head %}
+
+
+{% block content %}
+<!-- Start of content of page -->
+  <!-- side bar left -->
+  <div class="container">
+        <div class="col-md-2 side-nav">
+          <ul>
+            <li>Profile</li>
+            <li>Dashboard</li>
+            <li>Settings</li>
+          </ul>
+        </div>
+        <!-- Main content -->
+        <div class="col-md-9 col-md-offset-1">
+          <div class="row profile-content">
+            <div class="col-md-2" id="profile-picture">
+              <img src="http://i.imgur.com/Vsb9RI7.jpg" alt="profile picture" height="150px" width="" margin-top="10px"/>
+            </div>
+            <div class="col-md-9 col-md-offset-1">
+              <h3>Wannes Van Praet</h3>
+              <h4>25</h4>
+              <h4>burgerlijk ingenieur</h4>
+              <hr>
+              <h4>Scheppersinstituut mechelen</h4>
+              <h4>Muziekschool conservatorium</h4>
+              <h5>
+                <ul>
+                  <li>Piano</li>
+                  <li>Slagwerk</li>
+                  <li>Gitaar</li>
+                </ul>
+              </h5>
+              <hr>
+            </div>
+          </div>
+          <div class="row profile-tab">
+            <ul class="tab">
+              <a href="#"><li class="col-md-4 tablinks" onclick="openTab(event, 'Education')">Education</li></a>
+              <a href="#"><li class="col-md-4 tablinks" onclick="openTab(event, 'Extra-curricular')">Extra curricular</li></a>
+              <a href="#"><li class="col-md-4 tablinks" onclick="openTab(event, 'More-info')">More info</li></a>
+            </ul>
+          </div>
+          <div class="row profile-tab-content">
+            <div id=Education class="tabcontent">
+              <h3>Education</h3>
+              <p>Here comes extra specification about my education</p>
+            </div>
+            <div id=Extra-curricular class="tabcontent">
+              <h3>Extra curricular</h3>
+              <p>Here my extra curricular activities will be displayed</p>
+            </div>
+            <div id=More-info class="tabcontent">
+              <h3>More info</h3>
+              <p>Here some more background information on the person who I am is given</p>
+            </div>
+          </div>
+        </div> <!-- profile content -->
+      </div> <!-- container -->
+{% endblock content %}
+
+{% block script %}
+<script>
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+    }
+</script>
+{% endblock script%}
