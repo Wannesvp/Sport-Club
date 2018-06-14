@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "${workspaceFolder}\\env_Club\\Scripts\\python.exe"
+    "python.pythonPath": "C:\\Projects\\Club\\env_Club\\Scripts\\python.exe",
+    "javascript.format.enable": false,
 }
