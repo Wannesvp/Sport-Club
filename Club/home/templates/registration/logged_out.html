@@ -5,10 +5,11 @@
 {% block content %}
 <div class="container">
   <h2>Logout</h2>
+  <p>you are logged out</p>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Logout</button>
+    <!-- <button type="submit">Logout</button> -->
   </form>
 </div>
 {% endblock %}
