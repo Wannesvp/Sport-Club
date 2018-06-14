@@ -14,16 +14,16 @@
 <script>
 $(document).ready(function() {
     $('#calendar').fullCalendar({
-        defaultDate: '2018-04-20',
+        defaultDate: '2018-06-14',
         editable: true,
         eventLimit: true, // allow "more" link when too many events
         events: [
             {% for i in events %}
             {
-                title: "{{ i.event_name}}",
-                start: '{{ i.start_date|date:"Y-m-d" }}',
-                end: '{{ i.end_date|date:"Y-m-d" }}',
-                url: "/training-detail/2/",
+                title: "{{ i.location }} - {{ i.name}}",
+                start: '{{ i.date|date:"Y-m-d" }}',
+                end: '{{ i.date|date:"Y-m-d" }}',
+                url: "/training-detail/{{ i.id }}/",
             },
             {% endfor %}
         ]
