@@ -47,12 +47,29 @@ class Trainer(models.Model):
         ordering = ['first_name']
 
 
+class Warm_up(models.Model):
+    name = models.CharField(max_length=50, blank=True, null=True)
+    content = models.CharField(max_length=200, blank=True)
+    content_repeat = models.IntegerField(default=1)
+
+class Core(models.Model):
+    name = models.CharField(max_length=50, blank=True, null=True)
+    content_1 = models.CharField(max_length=1000, blank=True)
+    content_1_repeat = models.IntegerField(default=1)
+    content_2 = models.CharField(max_length=1000, blank=True)
+    content_2_repeat = models.IntegerField(default=1)
+
+class Cool_down(models.Model):
+    name = models.CharField(max_length=50, blank=True, null=True)
+    content = models.CharField(max_length=200, blank=True)
+    content_repeat = models.IntegerField(default=1)
+
 class Training_program(models.Model):
     name = models.CharField(max_length=50, blank=True, null=True)
-    warm_up = models.CharField(max_length=200, blank=True)
-    core = models.CharField(max_length=1000, blank=True)
-    cool_down = models.CharField(max_length=200, blank=True)
-
+    warm_up = models.ForeignKey(Warm_up, on_delete=models.CASCADE, blank=True)
+    core = models.ForeignKey(Core, on_delete=models.CASCADE, blank=True)
+    cool_down = models.ForeignKey(Cool_down, on_delete=models.CASCADE, blank=True)
+    
     def __str__(self):
         return self.name
     
@@ -76,11 +93,11 @@ class Training(models.Model):
         ordering = ['name']
 
 
-class type_event(models.Model):
+class Type_event(models.Model):
     type = models.CharField(max_length=30)
     
     def __str__(self):
-        return self.level
+        return self.type
 
 
 class Events(models.Model):
@@ -88,7 +105,7 @@ class Events(models.Model):
     event_name = models.CharField(max_length=255,null=True,blank=True)
     start_date = models.DateTimeField(null=True,blank=True)
     end_date = models.DateTimeField(null=True,blank=True)
-    event_type = models.ForeignKey(type_event, on_delete=models.CASCADE,)
+    event_type = models.ForeignKey(Type_event, null=True,blank=True, on_delete=models.CASCADE,)
 
     def __str__(self):
         return self.event_name
