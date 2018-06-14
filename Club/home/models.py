@@ -49,20 +49,32 @@ class Trainer(models.Model):
 
 class Warm_up(models.Model):
     name = models.CharField(max_length=50, blank=True, null=True)
-    content = models.CharField(max_length=200, blank=True)
+    content = models.TextField(max_length=200, blank=True)
     content_repeat = models.IntegerField(default=1)
+
+    def __str__(self):
+        return self.name
+
 
 class Core(models.Model):
     name = models.CharField(max_length=50, blank=True, null=True)
-    content_1 = models.CharField(max_length=1000, blank=True)
-    content_1_repeat = models.IntegerField(default=1)
-    content_2 = models.CharField(max_length=1000, blank=True)
-    content_2_repeat = models.IntegerField(default=1)
+    content_1 = models.TextField(max_length=1000, blank=True)
+    content_1_repeat = models.IntegerField(default=1, verbose_name="aantal keer")
+    content_2 = models.TextField(max_length=1000, blank=True)
+    content_2_repeat = models.IntegerField(default=1, verbose_name="aantal keer")
+
+    def __str__(self):
+        return self.name
+
 
 class Cool_down(models.Model):
     name = models.CharField(max_length=50, blank=True, null=True)
-    content = models.CharField(max_length=200, blank=True)
+    content = models.TextField(max_length=200, blank=True)
     content_repeat = models.IntegerField(default=1)
+
+    def __str__(self):
+        return self.name
+
 
 class Training_program(models.Model):
     name = models.CharField(max_length=50, blank=True, null=True)
@@ -85,6 +97,9 @@ class Training(models.Model):
     trainers = models.ManyToManyField(Trainer, blank=True)
     riders = models.ManyToManyField(Rider, blank=True)
     program = models.ForeignKey(Training_program, on_delete=models.CASCADE, blank=True, null=True)
+    warm_up = models.ForeignKey(Warm_up, on_delete=models.CASCADE, blank=True, null=True)
+    core = models.ForeignKey(Core, on_delete=models.CASCADE, blank=True, null=True)
+    cool_down = models.ForeignKey(Cool_down, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.name
