@@ -6,20 +6,84 @@
 {% block content %}
 
 <div class="container">
-    <ul>
-        <li>name: {{ training.name }}</li>
-        <li>date: {{ training.date }}</li>
-        <li>start time: {{ training.start_time }}</li>
-        <li>location: {{ training.location }}</li>
-        <li>riders:
-            <ul>
-            {% for rider in riders %}
-                <li>{{ rider }}</li>
-            {% endfor %}
-            </ul>
-        </li>
-        <li></li>
+    <div class="col-md-3">
+        <div class="side-nav">
+            <h2>{{ training.name }}</h2>
+        </div>
+        <div class="side-nav">
+            <h2>{{ training.trainers.first_name }}</h2>
+            <h4>Wannes</h4>
+        </div>
+        <div class="side-nav">
+            <h2>{{ training.riders.number }}</h2>
+            <h4>15 renners</h4>
+        </div>
+    </div>
+    <!-- Main content -->
+    <div class="col-md-9"> <!-- col-md-offset-1 -->
+    <div class="row profile-content">
+        <div class="col-md-2" id="profile-picture">
+            <img src="https://i.imgur.com/oKupqs3.png" alt="venue picture" height="150px" width="" margin-top="10px"/>
+        </div>
+        <div class="col-md-9 col-md-offset-1">
+            <div class="training-meta">
+                <h4 class="glyphicon glyphicon-map-marker padding-right-40" aria-hidden="true"> {{ training.location }}  </h4>
+                <h4 class="glyphicon glyphicon-calendar padding-right-40" aria-hidden="true"> {{ training.date }}  </h4>
+                <h4 class="glyphicon glyphicon-time" aria-hidden="true"> {{ training.start_time }}</h4>
+            </div>
+            <hr>
+            <h6 class="gray">Opwarming</h6>
+            <h4>{{ training.warm_up.content }}</h4>
+            <hr>
+            <h6 class="gray">Core</h6>
+            <h4>{{ training.core.content_1 }}</h4>
+            <h4>herhaal: {{ training.core.content_1_repeat }} maal</h4>
+            <hr>
+            <h6 class="gray">uitrijden</h6>
+            <h4>{{ training.cool_down.content }}</h4>
+            <hr>
+        </div>
+    </div>
+      <div class="row profile-tab">
+        <ul class="tab">
+        <a href="#"><li class="col-md-4 tablinks" onclick="openTab(event, 'Education')">Before</li></a>
+        <a href="#"><li class="col-md-4 tablinks" onclick="openTab(event, 'Extra-curricular')">During</li></a>
+        <a href="#"><li class="col-md-4 tablinks" onclick="openTab(event, 'More-info')">After</li></a>
         </ul>
-</div>    
+      </div>
+      <div class="row profile-tab-content">
+        <div id=Education class="tabcontent">
+          <h3>Before</h3>
+          <p>Here comes extra specification about Before</p>
+        </div>
+        <div id=Extra-curricular class="tabcontent">
+          <h3>During</h3>
+          <p>Here the during attention points will be displayed</p>
+        </div>
+        <div id=More-info class="tabcontent">
+          <h3>After</h3>
+          <p>Here some more background information what to do after training</p>
+        </div>
+      </div>
+    </div> <!-- profile content -->
+  </div> <!-- container --> 
 
 {% endblock content %}
+
+{% block script %}
+<script>
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+    }
+</script>
+{% endblock script%}
