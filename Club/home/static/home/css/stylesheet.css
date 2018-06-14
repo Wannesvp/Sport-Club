@@ -99,6 +99,10 @@ ul.nav li a:hover, ul.nav li a:active,  ul.nav li a:focus {
   padding-right:40px;
 }
 
+.small {
+  font-size: 14px;
+}
+
 /* */ /* */ /**/ /**/
 /* main content */
 /* side navigator styling */
