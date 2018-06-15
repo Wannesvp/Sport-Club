@@ -41,14 +41,17 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     return render(request, 'home/home.html')
 
+@login_required
 def display_trainings(request):
     trainings = Training.objects.all()
     return render(request, 'home/view_trainings.html', {'trainings': trainings})
 
+@login_required
 def display_training(request, training_id):
     training = get_object_or_404(Training, pk=training_id)
     return render(request, 'home/view_training.html', {'training': training})
 
+@login_required
 def display_calendar(request):
     all_events = Training.objects.all()
     get_event_types = Training.objects.only('event_type')
@@ -87,7 +90,7 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('/')
+            return redirect('/profile/')
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
