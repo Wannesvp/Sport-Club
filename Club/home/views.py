@@ -108,7 +108,7 @@ def update_profile(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            messages.success(request, 'Your profile was succesfullt updated!')
+            messages.success(request, 'Your profile was succesfully updated!')
             return redirect('/profile/')
         else:
             messages.error(request, 'Please correct the error bellow')
@@ -119,6 +119,6 @@ def update_profile(request):
         'user_form': user_form,
         'profile_form': profile_form
     }
-    return render(request, 'home/profile1.html', context)
+    return render(request, 'home/update_profile.html', context)
 
     
