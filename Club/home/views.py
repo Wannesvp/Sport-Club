@@ -1,6 +1,12 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from home.models import Training, Events
 import datetime
+
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
+
+from django.contrib.auth.decorators import login_required
+
 
 '''def display(request):
     monday = []
@@ -35,14 +41,17 @@ import datetime
 def home(request):
     return render(request, 'home/home.html')
 
+@login_required
 def display_trainings(request):
     trainings = Training.objects.all()
     return render(request, 'home/view_trainings.html', {'trainings': trainings})
 
+@login_required
 def display_training(request, training_id):
     training = get_object_or_404(Training, pk=training_id)
     return render(request, 'home/view_training.html', {'training': training})
 
+@login_required
 def display_calendar(request):
     all_events = Training.objects.all()
     get_event_types = Training.objects.only('event_type')
@@ -68,5 +77,20 @@ def display_calendar(request):
     }
     return render(request,'home/calendar.html',context)
 
+@login_required
 def display_profile(request):
     return render(request, 'home/profile.html')
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('/profile/')
+    else:
+        form = UserCreationForm()
+    return render(request, 'signup.html', {'form': form})
