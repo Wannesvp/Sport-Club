@@ -1,0 +1,19 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+{% block title %} Calendar {% endblock title %}
+
+
+{% block head %}
+{% endblock head %}
+
+
+{% block content %}
+<div class="container">
+    <form method="post">
+        {% csrf_token %}
+        {{ training_form.as_p }}
+        <button type="submit">Save changes</button>
+    </form>
+</div>
+{% endblock content%}

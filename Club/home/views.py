@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 from django.contrib.auth.decorators import login_required
 
-from home.forms import UserForm, ProfileForm
+from home.forms import UserForm, ProfileForm, TrainingForm
 from django.db import transaction
 from django.contrib import messages
 
@@ -53,6 +53,27 @@ def display_trainings(request):
 def display_training(request, training_id):
     training = get_object_or_404(Training, pk=training_id)
     return render(request, 'home/view_training.html', {'training': training})
+
+
+@login_required
+@transaction.atomic
+def update_training(request, training_id):
+    training = get_object_or_404(Training, pk=training_id)
+    if request.method == 'POST':
+        training_form = TrainingForm(request.POST, instance=training)
+        if training_form.is_valid():
+            training_form.save()
+            messages.success(request, 'The training was succesfully updated!')
+            return redirect('/training-detail/'+ str(training.id) +'/')
+        else:
+            messages.error(request, 'Please correct the error bellow')
+    else:
+        training_form = TrainingForm(instance=training)
+    context = {
+        'training_form': training_form,
+    }
+    return render(request, 'home/update_training.html', context)
+
 
 @login_required
 def display_calendar(request):
