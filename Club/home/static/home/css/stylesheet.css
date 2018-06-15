@@ -223,3 +223,12 @@ ul.tab{
   margin-left:0px;
   margin-bottom:40px;
 }
+
+/* */ /* */ /**/ /**/
+/* messages */
+.success {
+  padding:12px;
+  border: 1px solid darkgreen;
+  border-radius: 3px;
+  color: black
+}

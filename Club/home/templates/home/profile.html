@@ -22,11 +22,9 @@
       {% endif %}
 
         <div class="col-md-2 side-nav">
-          <ul>
-            <li>Profile</li>
-            <li>Dashboard</li>
-            <li>Settings</li>
-          </ul>
+            <p><a href="/profile/update/"><span class="glyphicon glyphicon-edit">Update profile</span></a></p>
+            <p><a href="/profile/"><span class="glyphicon glyphicon-credit-card">Change password</span></a></p>
+            <p><a href="/profile/"><span class="glyphicon glyphicon-wrench">settings</span></a></p>
         </div>
         <!-- Main content -->
         <div class="col-md-9">
@@ -35,19 +33,14 @@
               <img src="http://i.imgur.com/Vsb9RI7.jpg" alt="profile picture" height="150px" width="" margin-top="10px"/>
             </div>
             <div class="col-md-9 col-md-offset-1">
-              <h3>{{ request.user.username }}</h3>
-              <h4>25</h4>
-              <h4>burgerlijk ingenieur</h4>
               <hr>
-              <h4>Scheppersinstituut mechelen</h4>
-              <h4>Muziekschool conservatorium</h4>
-              <h5>
-                <ul>
-                  <li>Piano</li>
-                  <li>Slagwerk</li>
-                  <li>Gitaar</li>
-                </ul>
-              </h5>
+              <p>{{ request.user.username }}</p>
+              <p>{{ request.user.first_name }} {{ request.user.last_name }}</p>
+              <p>{{request.user.profile.birth_date}}</p>
+              <hr>
+              <p>{{ request.user.profile.bio }}</p>
+              <p>{{ request.user.profile.location }}</p>
+              <p>{{ request.user.email }}</p>
               <hr>
             </div>
           </div>
