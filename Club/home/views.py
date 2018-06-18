@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 from django.contrib.auth.decorators import login_required
 
-from home.forms import UserForm, ProfileForm, TrainingForm
+from home.forms import UserForm, ProfileForm, TrainingForm, Warm_upForm, CoreForm, Cool_downForm
 from django.db import transaction
 from django.contrib import messages
 
@@ -53,6 +53,104 @@ def display_trainings(request):
 def display_training(request, training_id):
     training = get_object_or_404(Training, pk=training_id)
     return render(request, 'home/view_training.html', {'training': training})
+
+
+@login_required
+def create_training(request):
+    if request.method == 'POST':
+        warm_upform = Warm_upForm(request.POST, prefix="warm")
+        coreform = CoreForm(request.POST, prefix="core")
+        cool_downform = Cool_downForm(request.POST, prefix="cool")
+        if warm_upform.is_valid() and coreform.is_valid() and cool_downform.is_valid():  
+            warm_upform.save()
+            coreform.save()
+            cool_downform.save()
+            messages.success(request, 'The new training was succesfully created!')
+            return redirect('/all-trainings/')
+        else:
+            messages.error(request, 'Please correct the error bellow')
+    else:
+        warm_upform = Warm_upForm(prefix="warm")
+        coreform = CoreForm(prefix="core")
+        cool_downform = Cool_downForm(prefix="cool")
+    context = {
+        'warm_upform': warm_upform,
+        'coreform': coreform,
+        'cool_downform': cool_downform,
+    }
+    return render(request, 'home/create_training.html', context)
+
+
+@login_required
+def create_warm_up(request):
+    if request.method == 'POST':
+        warm_upform = Warm_upForm(request.POST)
+        if warm_upform.is_valid():  
+            warm_upform.save()
+            messages.success(request, 'The new training was succesfully created!')
+            return redirect('/all-trainings/')
+        else:
+            messages.error(request, 'Please correct the error bellow')
+    else:
+        warm_upform = Warm_upForm()
+    context = {
+        'warm_upform': warm_upform,
+    }
+    return render(request, 'home/create_warm-up.html', context)
+
+
+@login_required
+def create_core(request):
+    if request.method == 'POST':
+        coreform = CoreForm(request.POST)
+        if coreform.is_valid():
+            coreform.save()
+            messages.success(request, 'The new core was succesfully created!')
+            return redirect('/all-trainings/')
+        else:
+            messages.error(request, 'Please correct the error bellow')
+    else:
+        coreform = CoreForm()
+    context = {
+        'coreform': coreform,
+    }
+    return render(request, 'home/create_core.html', context)
+
+
+@login_required
+def create_cool_down(request):
+    if request.method == 'POST':
+        cool_downform = Cool_downForm(request.POST)
+        if cool_downform.is_valid():  
+            cool_downform.save()
+            messages.success(request, 'The new training was succesfully created!')
+            return redirect('/all-trainings/')
+        else:
+            messages.error(request, 'Please correct the error bellow')
+    else:
+        cool_downform = Cool_downForm()
+    context = {
+        'cool_downform': cool_downform,
+    }
+    return render(request, 'home/create_cool-down.html', context)
+
+
+@login_required
+def plan_training(request):
+    if request.method == 'POST':
+        training_form = TrainingForm(request.POST)
+        if training_form.is_valid():
+            training_form.save()
+            messages.success(request, 'The new training was succesfully created!')
+            return redirect('/all-trainings/')
+        else:
+            messages.error(request, 'Please correct the error bellow')
+    else:
+        training_form = TrainingForm()
+    context = {
+        'training_form': training_form,
+    }
+    return render(request, 'home/update_training.html', context)
 
 
 @login_required
