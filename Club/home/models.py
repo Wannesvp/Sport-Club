@@ -71,29 +71,29 @@ class Trainer(models.Model):
 
 
 class Warm_up(models.Model):
-    name = models.CharField(max_length=50, blank=True, null=True)
+    name = models.CharField(max_length=50, default="warmup")
     content = models.TextField(max_length=200, blank=True)
-    content_repeat = models.IntegerField(default=1)
+    content_repeat = models.IntegerField(default=1, blank=True, null=True)
 
     def __str__(self):
         return self.name
 
 
 class Core(models.Model):
-    name = models.CharField(max_length=50, blank=True, null=True)
+    name = models.CharField(max_length=50, default="core")
     content_1 = models.TextField(max_length=1000, blank=True)
-    content_1_repeat = models.IntegerField(default=1, verbose_name="aantal keer")
-    content_2 = models.TextField(max_length=1000, blank=True)
-    content_2_repeat = models.IntegerField(default=1, verbose_name="aantal keer")
+    content_1_repeat = models.IntegerField(default=1, blank=True, null=True, verbose_name="aantal keer")
+    content_2 = models.TextField(max_length=1000, blank=True, null=True)
+    content_2_repeat = models.IntegerField(default=1, blank=True, null=True, verbose_name="aantal keer")
 
     def __str__(self):
         return self.name
 
 
 class Cool_down(models.Model):
-    name = models.CharField(max_length=50, blank=True, null=True)
+    name = models.CharField(max_length=50, default="cooldown")
     content = models.TextField(max_length=200, blank=True)
-    content_repeat = models.IntegerField(default=1)
+    content_repeat = models.IntegerField(default=1, blank=True, null=True)
 
     def __str__(self):
         return self.name

@@ -1,0 +1,43 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+{% block title %} Calendar {% endblock title %}
+
+
+{% block head %}
+{% endblock head %}
+
+
+{% block content %}
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+<div class="container">
+    <h1>Warm up</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ warm_upform.as_p }}
+        <h1>Core</h1>
+        {{ coreform.as_p }}
+        <h1>Cool down</h1>
+        {{ cool_downform.as_p }}
+        <button type="submit">Save warm up, core and cool down</button>
+    </form>
+
+    <!-- <div class="container">
+        <h1>Core</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ coreform.as_p }}
+        </form>
+    </div> -->
+
+</div>
+{% endblock content%}
