@@ -11,42 +11,13 @@ from home.forms import UserForm, ProfileForm, TrainingForm, Warm_upForm, CoreFor
 from django.db import transaction
 from django.contrib import messages
 
-'''def display(request):
-    monday = []
-    monday_riders = []
-    tuesday = []
-    wednesday = []
-    thursday = []
-    friday = []
-    saterday = []
-    sunday = []
-    trainings = Training.objects.all()
-    for training in trainings:
-        if training.day.lower() == "monday":
-            monday.append(training)
-            monday_riders = monday[0].riders.all()
-        if training.day.lower() == "tuesday":
-            tuesday.append(training)
-        if training.day.lower() == "wednesday":
-            wednesday.append(training)
-        if training.day.lower() == "thursday":
-            thursday.append(training)
-        if training.day.lower() == "friday":
-            friday.append(training)
-        if training.day.lower() == "saterday":
-            saterday.append(training)
-        if training.day.lower() == "sunday":
-            sunday.append(training)
-
-    return render(request, 'home/view_training_old.html', {'monday': monday, 'monday_riders': monday_riders, 'tuesday':tuesday, 'wednesday':wednesday, 'thursday':thursday, 'friday':friday, 'saterday':saterday,'sunday': sunday})
-'''
 
 def home(request):
     return render(request, 'home/home.html')
 
 @login_required
 def display_trainings(request):
-    trainings = Training.objects.all()
+    trainings = Training.objects.filter(is_standard=True)
     return render(request, 'home/view_trainings.html', {'trainings': trainings})
 
 @login_required
