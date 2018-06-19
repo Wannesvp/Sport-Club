@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from home.models import Training, Events
+from home.models import Training, Event
 import datetime
 
 from django.contrib.auth import login, authenticate
@@ -146,27 +146,38 @@ def update_training(request, training_id):
 
 @login_required
 def display_calendar(request):
-    all_events = Training.objects.all()
+    all_events = Event.objects.all()
     get_event_types = Training.objects.only('event_type')
+    all_trainings = Training.objects.all()
 
     # if filters applied then get parameter and filter based on condition else return object
     # code from graduaid app.
     if request.GET:  
         event_arr = []
-        
+        training_arr= []
         for i in all_events:
             event_sub_arr = {}
-            event_sub_arr['title'] = i.name
-            start_date = datetime.datetime.strptime(str(i.date.date()), "%Y-%m-%d").strftime("%Y-%m-%d")
-            end_date = datetime.datetime.strptime(str(i.date.date()), "%Y-%m-%d").strftime("%Y-%m-%d")
+            event_sub_arr['title'] = i.event_name
+            start_date = datetime.datetime.strptime(str(i.start_date.date()), "%Y-%m-%d").strftime("%Y-%m-%d")
+            end_date = datetime.datetime.strptime(str(i.end_date.date()), "%Y-%m-%d").strftime("%Y-%m-%d")
             event_sub_arr['start'] = start_date
             event_sub_arr['end'] = end_date
             event_arr.append(event_sub_arr)
         return HttpResponse(json.dumps(event_arr))
 
-    context = {
-        "events":all_events,
+        for i in all_trainings:
+            training_sub_arr = {}
+            training_sub_arr['title'] = i.name
+            start_date = datetime.datetime.strptime(str(i.date.date()), "%Y-%m-%d").strftime("%Y-%m-%d")
+            end_date = datetime.datetime.strptime(str(i.date.date()), "%Y-%m-%d").strftime("%Y-%m-%d")
+            training_sub_arr['start'] = start_date
+            training_sub_arr['end'] = end_date
+            training_arr.append(training_sub_arr)
+        return HttpResponse(json.dumps(training_arr))
 
+    context = {
+        "events": all_events,
+        "trainings": all_trainings,
     }
     return render(request,'home/calendar.html',context)
 

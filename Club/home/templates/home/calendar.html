@@ -10,6 +10,7 @@
 <script src="{% static "home/lib/jquery-3.3.1.min.js" %}"></script>
 <script src="{% static "home/lib/moment.js" %} "></script>
 <script src="{% static "home/lib/fullcalendar.js" %}"></script>
+<script type="text/javascript" src="http://cdn.jsdelivr.net/qtip2/3.0.3/jquery.qtip.min.js"></script>
 
 <script>
 $(document).ready(function() {
@@ -17,16 +18,34 @@ $(document).ready(function() {
         defaultDate: '2018-06-14',
         editable: true,
         eventLimit: true, // allow "more" link when too many events
+        header: {
+            left: 'prev, next today',
+            center: 'title',
+            right: 'month, basicWeek, basicDay'
+        },
         events: [
             {% for i in events %}
             {
-                title: "{{ i.location }} - {{ i.name}}",
+                title: "{{ i.event_name}}",
+                start: '{{ i.start_date|date:"Y-m-d" }}',
+                end: '{{ i.end_date|date:"Y-m-d" }}',
+                url: "/event-detail/{{ i.event_id }}/",
+                color:"green",
+                textColor: "black",
+            },
+            {% endfor %}
+            {% for i in trainings %}
+            {
+                title: "{{ i.location }}",
                 start: '{{ i.date|date:"Y-m-d" }}',
                 end: '{{ i.date|date:"Y-m-d" }}',
                 url: "/training-detail/{{ i.id }}/",
+                color:"gray",
+                textColor: "black",
+                description: "this is cool"
             },
             {% endfor %}
-        ]
+        ],
     });
 });
 </script>
