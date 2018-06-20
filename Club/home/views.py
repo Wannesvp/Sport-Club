@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from home.models import Training, Event
 import datetime
+from datetime import date
 
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
@@ -18,10 +19,14 @@ def home(request):
 @login_required
 def display_trainings(request):
     trainings_standard = Training.objects.filter(is_standard=True).order_by('date')
-    trainings_future = Training.objects.filter(is_standard=False).order_by('date')
+    weekNumber = date.today().isocalendar()[1]
+    weekNumberPlus = weekNumber + 1
+    print(weekNumber)
+    trainings_future_week = Training.objects.filter(is_standard=False).filter(date__week=weekNumber).order_by('date')
+    trainings_future_next_week = Training.objects.filter(is_standard=False).filter(date__week=weekNumberPlus).order_by('date')
 
-    trainings_future_dict= {}
-    for training in trainings_future:
+    trainings_future_week_dict= {}
+    for training in trainings_future_week:
         trainers = training.trainers.all()
         riders = training.riders.all()
         user_is_present = None
@@ -31,11 +36,28 @@ def display_trainings(request):
             user_is_present = "rider"
         if request.user.profile in riders and request.user.profile in trainers:
             user_is_present = "rider & trainer"
-        trainings_future_dict[training] = user_is_present
+        trainings_future_week_dict[training] = user_is_present
+    
+    trainings_future_next_week_dict= {}
+    for training in trainings_future_next_week:
+        trainers = training.trainers.all()
+        riders = training.riders.all()
+        user_is_present = None
+        if request.user.profile in trainers:
+            user_is_present = "trainer"
+        if request.user.profile in riders:
+            user_is_present = "rider"
+        if request.user.profile in riders and request.user.profile in trainers:
+            user_is_present = "rider & trainer"
+        trainings_future_next_week_dict[training] = user_is_present
     context = {
+        'next': '/all-trainings/',
+        'weekNumber': weekNumber,
+        'weekNumberPlus': weekNumberPlus,
         'trainings_standard': trainings_standard,
-        'trainings_future': trainings_future,
-        'trainings_future_dict': trainings_future_dict,
+        'trainings_future_week': trainings_future_week,
+        'trainings_future_week_dict': trainings_future_week_dict,
+        'trainings_future_next_week_dict': trainings_future_next_week_dict,
     }
     return render(request, 'home/view_trainings.html', context)
 
@@ -50,17 +72,26 @@ def display_training(request, training_id):
         user_is_trainer = True
     if request.user.profile in riders:
         user_is_rider = True
-    return render(request, 'home/view_training.html', {'training': training, 'trainers': trainers, 'riders': riders, 'user_is_trainer': user_is_trainer, 'user_is_rider': user_is_rider})
+    if request.GET.get('next'): """ redirect for training_subscribe views """
+        return redirect(request.GET.get('next', ''))
+    else:
+        return render(request, 'home/view_training.html', {'training': training, 'trainers': trainers, 'riders': riders, 'user_is_trainer': user_is_trainer, 'user_is_rider': user_is_rider})
 
 
 def training_subscribe(request, training_id):
     training = get_object_or_404(Training, pk=training_id)
     training.riders.add(request.user.profile)
-    return redirect('/training-detail/' + training_id + '/')
+    return redirect('/training-detail/' + training_id + '/' + '?next=' +request.GET.get('next', ''))
 
 
 def training_subscribe_all(request):
     trainings = Training.objects.filter(is_standard=False)
+    for training in trainings:
+        training.riders.add(request.user.profile)
+    return redirect('/all-trainings/')
+
+def training_subscribe_week(request, week_nb):
+    trainings = Training.objects.filter(is_standard=False).filter(date__week=week_nb)
     for training in trainings:
         training.riders.add(request.user.profile)
     return redirect('/all-trainings/')
@@ -70,6 +101,19 @@ def training_unsubscribe(request, training_id):
     training = get_object_or_404(Training, pk=training_id)
     training.riders.remove(request.user.profile)
     return redirect('/training-detail/' + training_id + '/')
+
+
+def training_unsubscribe_all(request):
+    trainings = Training.objects.filter(is_standard=False)
+    for training in trainings:
+        training.riders.remove(request.user.profile)
+    return redirect('/all-trainings/')
+
+def training_unsubscribe_week(request, week_nb):
+    trainings = Training.objects.filter(is_standard=False).filter(date__week=week_nb)
+    for training in trainings:
+        training.riders.remove(request.user.profile)
+    return redirect('/all-trainings/')
 
 
 @login_required

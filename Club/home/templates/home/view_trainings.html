@@ -13,12 +13,13 @@
         {% endfor %}
     </ul>
     <h1>List of planned trainings this week</h1>
-    <a href="/training-detail/all/subscribe">signup for all future trainings</a>
+    <p><a href="/training-detail/week/{{ weekNumber }}/subscribe">signup for all trainings of this week</a></p>
+    <p><a href="/training-detail/week/{{ weekNumber }}/unsubscribe">unsubscribe for all trainings of this week</a></p>
     <ul>
-        {% for training,user_is_present in trainings_future_dict.items %}
+        {% for training,user_is_present in trainings_future_week_dict.items %}
             <li><a href="/training-detail/{{training.id}}/">{{ training }}</a> -
-                {% if user_is_present %} <a href="/training-detail/{{ training.id }}/unsubscribe"> present - unsubscribe </a>
-                {% else %} <a href="/training-detail/{{ training.id }}/subscribe">signup </a>
+                {% if user_is_present %} <a href="/training-detail/{{ training.id }}/unsubscribe/?next={{next}}"> present - unsubscribe </a>
+                {% else %} <a href="/training-detail/{{ training.id }}/subscribe/?next={{next}}">signup </a>
                 {% endif %}
             </li>
             <ul>
@@ -30,9 +31,10 @@
         {% endfor %}
     </ul>
     <h1>List of planned trainings next week</h1>
-    <a href="/training-detail/all/subscribe">signup for all future trainings</a>
+    <p><a href="/training-detail/week/{{ weekNumberPlus }}/subscribe">signup for all trainings of next week</a></p>
+    <p><a href="/training-detail/week/{{ weekNumberPlus }}/unsubscribe">unsubscribe for all trainings of next week</a></p>
     <ul>
-        {% for training,user_is_present in trainings_future_dict.items %}
+        {% for training,user_is_present in trainings_future_next_week_dict.items %}
             <li><a href="/training-detail/{{training.id}}/">{{ training }}</a> -
                 {% if user_is_present %} <a href="/training-detail/{{ training.id }}/unsubscribe"> present - unsubscribe </a>
                 {% else %} <a href="/training-detail/{{ training.id }}/subscribe">signup </a>
