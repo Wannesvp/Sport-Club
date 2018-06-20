@@ -104,10 +104,10 @@ ul.nav li a:hover, ul.nav li a:active,  ul.nav li a:focus {
 }
 
 .week-training-element {
-  background-color: goldenrod;
-  border: 1px solid goldenrod;
+  background-color: lightblue;
+  border: 2px solid rgb(46, 133, 161);
   padding: 10px;
-  margin-right: 10px;
+  margin-right: 10px; 
   margin-bottom: 10px;
   border-radius: 5px;
 }
