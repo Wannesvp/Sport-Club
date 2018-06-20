@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import (Profile, Location, Level_Trainer, Warm_up, Core, Cool_down, Training_program,Training,
-Type_event, Events)
+Type_event, Event)
 
 class TrainingAdmin(admin.ModelAdmin):
     list_display = ('name', 'location', 'date')
@@ -24,4 +24,4 @@ admin.site.register(Cool_down, Cool_downAdmin)
 admin.site.register(Training_program)
 admin.site.register(Training, TrainingAdmin)
 admin.site.register(Type_event)
-admin.site.register(Events)
+admin.site.register(Event)

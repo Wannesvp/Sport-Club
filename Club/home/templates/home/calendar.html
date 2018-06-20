@@ -14,19 +14,40 @@
 <script>
 $(document).ready(function() {
     $('#calendar').fullCalendar({
-        defaultDate: '2018-06-14',
+        /* defaultDate: '2018-06-14', */
+        firstDay: 1, /* start week on monday*/
         editable: true,
         eventLimit: true, // allow "more" link when too many events
+        header: {
+            left: 'prev, next today',
+            center: 'title',
+            right: 'month, basicWeek, basicDay'
+        },
         events: [
             {% for i in events %}
             {
-                title: "{{ i.location }} - {{ i.name}}",
+                title: "{{ i.event_name}}",
+                start: '{{ i.start_date|date:"Y-m-d" }}',
+                end: '{{ i.end_date|date:"Y-m-d" }}',
+                url: "/event-detail/{{ i.event_id }}/",
+                color:"green",
+                textColor: "black",
+            },
+            {% endfor %}
+            {% for i in trainings %}
+            {
+                title: "{{ i.start_time }} - {{ i.location }}",
                 start: '{{ i.date|date:"Y-m-d" }}',
                 end: '{{ i.date|date:"Y-m-d" }}',
                 url: "/training-detail/{{ i.id }}/",
+                color:"gray",
+                textColor: "black",
+                description: "this is cool"
             },
             {% endfor %}
-        ]
+        ],
+        weekNumbers: true,
+        weekNumbersWithinDays: true,
     });
 });
 </script>
