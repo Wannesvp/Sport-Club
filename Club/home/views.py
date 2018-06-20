@@ -23,7 +23,9 @@ def display_trainings(request):
 @login_required
 def display_training(request, training_id):
     training = get_object_or_404(Training, pk=training_id)
-    return render(request, 'home/view_training.html', {'training': training})
+    trainers = training.trainers.all()
+    riders = training.riders.all()
+    return render(request, 'home/view_training.html', {'training': training, 'trainers': trainers, 'riders': riders })
 
 
 @login_required
@@ -148,7 +150,7 @@ def update_training(request, training_id):
 def display_calendar(request):
     all_events = Event.objects.all()
     get_event_types = Training.objects.only('event_type')
-    all_trainings = Training.objects.all()
+    all_trainings = Training.objects.filter(is_standard=False)
 
     # if filters applied then get parameter and filter based on condition else return object
     # code from graduaid app.

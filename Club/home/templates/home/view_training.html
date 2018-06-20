@@ -7,65 +7,82 @@
 
 <div class="container">
     <div class="col-md-3">
-        <div class="side-nav">
-            <h2>{{ training.name }}</h2>
-            <p><a href="/training-detail/{{ training.id }}/update/"><span class="glyphicon glyphicon-edit">Update training</span></a></p>
-        </div>
-        <div class="side-nav">
-            <h2>{{ training.trainers.first_name }}</h2>
-            <h4>Wannes</h4>
-        </div>
-        <div class="side-nav">
-            <h2>{{ training.riders.number }}</h2>
-            <h4>15 renners</h4>
-        </div>
+        {% if not training.is_standard%}
+            <div class="side-nav">
+                <p class="glyphicon glyphicon-map-marker padding-right-40" aria-hidden="true"> {{ training.location }}  </p> <br>
+                <p class="glyphicon glyphicon-calendar padding-right-40" aria-hidden="true"> {{ training.date }}  </p> <br>
+                <p class="glyphicon glyphicon-time" aria-hidden="true"> {{ training.start_time }}</p> <br>
+                {% if request.user.is_staff %}
+                <p><a href="/training-detail/{{ training.id }}/update/"><span class="glyphicon glyphicon-edit">Update training</span></a></p>
+                {% endif %}
+            </div>
+            <div class="side-nav">
+                <h6 class="gray">Trainer</h6>
+                {% if trainers %}
+                    {% for trainer in trainers %}
+                        <h4>{{ trainer.user.username }}</h4>
+                    {% endfor %}
+                {% else %}
+                    <h4>geen trainer</h4>
+                {% endif %}
+            </div>
+            <div class="side-nav">
+                <h6 class="gray">Atleten</h6>
+                {% if riders %}
+                    {% for rider in riders %}
+                        <h4>{{ rider.user.username }}</h4>
+                    {% endfor %}
+                {% else %}
+                    <h4>geen atleten</h4>
+                {% endif %}
+            </div>
+        {% else %}
+            {% if request.user.is_staff %}
+            <div class="side-nav">
+                <p><a href="/training-detail/{{ training.id }}/update/"><span class="glyphicon glyphicon-edit">Update training</span></a></p>
+            </div>
+            {% endif %}
+        {% endif %}
     </div>
     <!-- Main content -->
-    <div class="col-md-9"> <!-- col-md-offset-1 -->
-    <div class="row profile-content">
-        <div class="col-md-2" id="profile-picture">
-            <img src="https://i.imgur.com/oKupqs3.png" alt="venue picture" height="150px" width="" margin-top="10px"/>
-        </div>
-        <div class="col-md-9 col-md-offset-1">
-            <div class="training-meta">
-                <h4 class="glyphicon glyphicon-map-marker padding-right-40" aria-hidden="true"> {{ training.location }}  </h4>
-                <h4 class="glyphicon glyphicon-calendar padding-right-40" aria-hidden="true"> {{ training.date }}  </h4>
-                <h4 class="glyphicon glyphicon-time" aria-hidden="true"> {{ training.start_time }}</h4>
+    <div class="col-md-9">
+        <div class="row profile-content">
+            <h2>  {{ training.name }}</h2>
+            <div class="col-md-10 col-md-offset-1">
+                <hr>
+                <h6 class="gray">Opwarming</h6>
+                <h4>{{ training.warm_up.content }}</h4>
+                <hr>
+                <h6 class="gray">Core</h6>
+                <h4>{{ training.core.content_1 }}</h4>
+                <h4>herhaal: {{ training.core.content_1_repeat }} maal</h4>
+                <hr>
+                <h6 class="gray">uitrijden</h6>
+                <h4>{{ training.cool_down.content }}</h4>
+                <hr>
             </div>
-            <hr>
-            <h6 class="gray">Opwarming</h6>
-            <h4>{{ training.warm_up.content }}</h4>
-            <hr>
-            <h6 class="gray">Core</h6>
-            <h4>{{ training.core.content_1 }}</h4>
-            <h4>herhaal: {{ training.core.content_1_repeat }} maal</h4>
-            <hr>
-            <h6 class="gray">uitrijden</h6>
-            <h4>{{ training.cool_down.content }}</h4>
-            <hr>
         </div>
-    </div>
-      <div class="row profile-tab">
+        <!-- <div class="row profile-tab">
         <ul class="tab">
         <a href="#"><li class="col-md-4 tablinks" onclick="openTab(event, 'Education')">Before</li></a>
         <a href="#"><li class="col-md-4 tablinks" onclick="openTab(event, 'Extra-curricular')">During</li></a>
         <a href="#"><li class="col-md-4 tablinks" onclick="openTab(event, 'More-info')">After</li></a>
         </ul>
-      </div>
-      <div class="row profile-tab-content">
-        <div id=Education class="tabcontent">
-          <h3>Before</h3>
-          <p>Here comes extra specification about Before</p>
         </div>
-        <div id=Extra-curricular class="tabcontent">
-          <h3>During</h3>
-          <p>Here the during attention points will be displayed</p>
-        </div>
-        <div id=More-info class="tabcontent">
-          <h3>After</h3>
-          <p>Here some more background information what to do after training</p>
-        </div>
-      </div>
+        <div class="row profile-tab-content">
+            <div id=Education class="tabcontent">
+                <h3>Before</h3>
+                <p>Here comes extra specification about Before</p>
+            </div>
+            <div id=Extra-curricular class="tabcontent">
+                <h3>During</h3>
+                <p>Here the during attention points will be displayed</p>
+            </div>
+            <div id=More-info class="tabcontent">
+                <h3>After</h3>
+                <p>Here some more background information what to do after training</p>
+            </div>
+        </div> -->
     </div> <!-- profile content -->
   </div> <!-- container --> 
 
