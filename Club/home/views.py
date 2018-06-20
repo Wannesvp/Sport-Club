@@ -25,7 +25,25 @@ def display_training(request, training_id):
     training = get_object_or_404(Training, pk=training_id)
     trainers = training.trainers.all()
     riders = training.riders.all()
-    return render(request, 'home/view_training.html', {'training': training, 'trainers': trainers, 'riders': riders })
+    user_is_trainer = False
+    user_is_rider = False
+    if request.user.profile in trainers:
+        user_is_trainer = True
+    if request.user.profile in riders:
+        user_is_rider = True
+    return render(request, 'home/view_training.html', {'training': training, 'trainers': trainers, 'riders': riders, 'user_is_trainer': user_is_trainer, 'user_is_rider': user_is_rider})
+
+
+def training_subscribe(request, training_id):
+    training = get_object_or_404(Training, pk=training_id)
+    training.riders.add(request.user.profile)
+    return redirect('/training-detail/' + training_id + '/')
+
+
+def training_unsubscribe(request, training_id):
+    training = get_object_or_404(Training, pk=training_id)
+    training.riders.remove(request.user.profile)
+    return redirect('/training-detail/' + training_id + '/')
 
 
 @login_required

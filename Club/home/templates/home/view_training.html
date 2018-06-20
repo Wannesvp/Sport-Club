@@ -19,15 +19,25 @@
             <div class="side-nav">
                 <h6 class="gray">Trainer</h6>
                 {% if trainers %}
-                    {% for trainer in trainers %}
-                        <h4>{{ trainer.user.username }}</h4>
-                    {% endfor %}
+                    {% if user_is_trainer %}
+                        <h4>You are the trainer!</h4>
+                    {% else %}
+                        {% for trainer in trainers %}
+                            <h4>{{ trainer.user.username }}</h4>
+                        {% endfor %}
+                    {% endif %}
                 {% else %}
                     <h4>geen trainer</h4>
                 {% endif %}
             </div>
             <div class="side-nav">
                 <h6 class="gray">Atleten</h6>
+                {% if user_is_rider %}
+                    <h4>You are signed in</h4>
+                    <a class="btn btn-info" href="/training-detail/{{ training.id }}/unsubscribe/">sign out</a>
+                {% else %}
+                <a class="btn btn-info" href="/training-detail/{{ training.id }}/subscribe/">sign in</a>
+                {% endif %}
                 {% if riders %}
                     {% for rider in riders %}
                         <h4>{{ rider.user.username }}</h4>
