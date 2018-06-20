@@ -72,16 +72,15 @@ def display_training(request, training_id):
         user_is_trainer = True
     if request.user.profile in riders:
         user_is_rider = True
-    if request.GET.get('next'): """ redirect for training_subscribe views """
-        return redirect(request.GET.get('next', ''))
-    else:
-        return render(request, 'home/view_training.html', {'training': training, 'trainers': trainers, 'riders': riders, 'user_is_trainer': user_is_trainer, 'user_is_rider': user_is_rider})
+    return render(request, 'home/view_training.html', {'training': training, 'trainers': trainers, 'riders': riders, 'user_is_trainer': user_is_trainer, 'user_is_rider': user_is_rider})
 
 
 def training_subscribe(request, training_id):
     training = get_object_or_404(Training, pk=training_id)
     training.riders.add(request.user.profile)
-    return redirect('/training-detail/' + training_id + '/' + '?next=' +request.GET.get('next', ''))
+    if request.GET.get('next'):
+        return redirect(request.GET.get('next', ''))    
+    return redirect('/training-detail/' + training_id + '/')
 
 
 def training_subscribe_all(request):
@@ -100,6 +99,8 @@ def training_subscribe_week(request, week_nb):
 def training_unsubscribe(request, training_id):
     training = get_object_or_404(Training, pk=training_id)
     training.riders.remove(request.user.profile)
+    if request.GET.get('next'):
+        return redirect(request.GET.get('next', ''))    
     return redirect('/training-detail/' + training_id + '/')
 
 
@@ -112,9 +113,8 @@ def training_unsubscribe_all(request):
 def training_unsubscribe_week(request, week_nb):
     trainings = Training.objects.filter(is_standard=False).filter(date__week=week_nb)
     for training in trainings:
-        training.riders.remove(request.user.profile)
+        training.riders.remove(request.user.profile)    
     return redirect('/all-trainings/')
-
 
 @login_required
 def create_training(request):

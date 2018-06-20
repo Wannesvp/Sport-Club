@@ -36,8 +36,8 @@
     <ul>
         {% for training,user_is_present in trainings_future_next_week_dict.items %}
             <li><a href="/training-detail/{{training.id}}/">{{ training }}</a> -
-                {% if user_is_present %} <a href="/training-detail/{{ training.id }}/unsubscribe"> present - unsubscribe </a>
-                {% else %} <a href="/training-detail/{{ training.id }}/subscribe">signup </a>
+                {% if user_is_present %} <a href="/training-detail/{{ training.id }}/unsubscribe/?next={{next}}"> present - unsubscribe </a>
+                {% else %} <a href="/training-detail/{{ training.id }}/subscribe/?next={{next}}">signup </a>
                 {% endif %}
             </li>
             <ul>
