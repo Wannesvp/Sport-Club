@@ -99,6 +99,19 @@ ul.nav li a:hover, ul.nav li a:active,  ul.nav li a:focus {
   padding-right:40px;
 }
 
+.inline-block {
+  display: inline-block;
+}
+
+.week-training-element {
+  background-color: goldenrod;
+  border: 1px solid goldenrod;
+  padding: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
 .small {
   font-size: 14px;
 }
