@@ -127,7 +127,7 @@ def create_training(request):
             coreform.save()
             cool_downform.save()
             messages.success(request, 'The new training was succesfully created!')
-            return redirect('/all-trainings/')
+            return redirect('/home/')
         else:
             messages.error(request, 'Please correct the error bellow')
     else:
@@ -149,7 +149,7 @@ def create_warm_up(request):
         if warm_upform.is_valid():  
             warm_upform.save()
             messages.success(request, 'The new training was succesfully created!')
-            return redirect('/all-trainings/')
+            return redirect('/home/')
         else:
             messages.error(request, 'Please correct the error bellow')
     else:
@@ -167,7 +167,7 @@ def create_core(request):
         if coreform.is_valid():
             coreform.save()
             messages.success(request, 'The new core was succesfully created!')
-            return redirect('/all-trainings/')
+            return redirect('/home/')
         else:
             messages.error(request, 'Please correct the error bellow')
     else:
@@ -185,7 +185,7 @@ def create_cool_down(request):
         if cool_downform.is_valid():  
             cool_downform.save()
             messages.success(request, 'The new training was succesfully created!')
-            return redirect('/all-trainings/')
+            return redirect('/home/')
         else:
             messages.error(request, 'Please correct the error bellow')
     else:
@@ -203,7 +203,7 @@ def plan_training(request):
         if training_form.is_valid():
             training_form.save()
             messages.success(request, 'The new training was succesfully created!')
-            return redirect('/all-trainings/')
+            return redirect('/calendar/')
         else:
             messages.error(request, 'Please correct the error bellow')
     else:

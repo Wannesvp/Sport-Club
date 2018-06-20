@@ -54,6 +54,17 @@ $(document).ready(function() {
 {% endblock head %}
     
 {% block content %}
+<!-- print django messages framework -->
+<div class="container">
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+  
 <main>
     <div style="height:80px;"></div>
     <div style="width:60%; margin-left: 280px;">
