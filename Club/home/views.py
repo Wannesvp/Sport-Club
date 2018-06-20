@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from home.models import Training, Event
 import datetime
+from datetime import date
 
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
@@ -17,14 +18,103 @@ def home(request):
 
 @login_required
 def display_trainings(request):
-    trainings = Training.objects.filter(is_standard=True)
-    return render(request, 'home/view_trainings.html', {'trainings': trainings})
+    trainings_standard = Training.objects.filter(is_standard=True).order_by('date')
+    weekNumber = date.today().isocalendar()[1]
+    weekNumberPlus = weekNumber + 1
+    print(weekNumber)
+    trainings_future_week = Training.objects.filter(is_standard=False).filter(date__week=weekNumber).order_by('date')
+    trainings_future_next_week = Training.objects.filter(is_standard=False).filter(date__week=weekNumberPlus).order_by('date')
+
+    trainings_future_week_dict= {}
+    for training in trainings_future_week:
+        trainers = training.trainers.all()
+        riders = training.riders.all()
+        user_is_present = None
+        if request.user.profile in trainers:
+            user_is_present = "trainer"
+        if request.user.profile in riders:
+            user_is_present = "rider"
+        if request.user.profile in riders and request.user.profile in trainers:
+            user_is_present = "rider & trainer"
+        trainings_future_week_dict[training] = user_is_present
+    
+    trainings_future_next_week_dict= {}
+    for training in trainings_future_next_week:
+        trainers = training.trainers.all()
+        riders = training.riders.all()
+        user_is_present = None
+        if request.user.profile in trainers:
+            user_is_present = "trainer"
+        if request.user.profile in riders:
+            user_is_present = "rider"
+        if request.user.profile in riders and request.user.profile in trainers:
+            user_is_present = "rider & trainer"
+        trainings_future_next_week_dict[training] = user_is_present
+    context = {
+        'next': '/all-trainings/',
+        'weekNumber': weekNumber,
+        'weekNumberPlus': weekNumberPlus,
+        'trainings_standard': trainings_standard,
+        'trainings_future_week': trainings_future_week,
+        'trainings_future_week_dict': trainings_future_week_dict,
+        'trainings_future_next_week_dict': trainings_future_next_week_dict,
+    }
+    return render(request, 'home/view_trainings.html', context)
 
 @login_required
 def display_training(request, training_id):
     training = get_object_or_404(Training, pk=training_id)
-    return render(request, 'home/view_training.html', {'training': training})
+    trainers = training.trainers.all()
+    riders = training.riders.all()
+    user_is_trainer = False
+    user_is_rider = False
+    if request.user.profile in trainers:
+        user_is_trainer = True
+    if request.user.profile in riders:
+        user_is_rider = True
+    return render(request, 'home/view_training.html', {'training': training, 'trainers': trainers, 'riders': riders, 'user_is_trainer': user_is_trainer, 'user_is_rider': user_is_rider})
 
+
+def training_subscribe(request, training_id):
+    training = get_object_or_404(Training, pk=training_id)
+    training.riders.add(request.user.profile)
+    if request.GET.get('next'):
+        return redirect(request.GET.get('next', ''))    
+    return redirect('/training-detail/' + training_id + '/')
+
+
+def training_subscribe_all(request):
+    trainings = Training.objects.filter(is_standard=False)
+    for training in trainings:
+        training.riders.add(request.user.profile)
+    return redirect('/all-trainings/')
+
+def training_subscribe_week(request, week_nb):
+    trainings = Training.objects.filter(is_standard=False).filter(date__week=week_nb)
+    for training in trainings:
+        training.riders.add(request.user.profile)
+    return redirect('/all-trainings/')
+
+
+def training_unsubscribe(request, training_id):
+    training = get_object_or_404(Training, pk=training_id)
+    training.riders.remove(request.user.profile)
+    if request.GET.get('next'):
+        return redirect(request.GET.get('next', ''))    
+    return redirect('/training-detail/' + training_id + '/')
+
+
+def training_unsubscribe_all(request):
+    trainings = Training.objects.filter(is_standard=False)
+    for training in trainings:
+        training.riders.remove(request.user.profile)
+    return redirect('/all-trainings/')
+
+def training_unsubscribe_week(request, week_nb):
+    trainings = Training.objects.filter(is_standard=False).filter(date__week=week_nb)
+    for training in trainings:
+        training.riders.remove(request.user.profile)    
+    return redirect('/all-trainings/')
 
 @login_required
 def create_training(request):
@@ -37,7 +127,7 @@ def create_training(request):
             coreform.save()
             cool_downform.save()
             messages.success(request, 'The new training was succesfully created!')
-            return redirect('/all-trainings/')
+            return redirect('/home/')
         else:
             messages.error(request, 'Please correct the error bellow')
     else:
@@ -59,7 +149,7 @@ def create_warm_up(request):
         if warm_upform.is_valid():  
             warm_upform.save()
             messages.success(request, 'The new training was succesfully created!')
-            return redirect('/all-trainings/')
+            return redirect('/home/')
         else:
             messages.error(request, 'Please correct the error bellow')
     else:
@@ -77,7 +167,7 @@ def create_core(request):
         if coreform.is_valid():
             coreform.save()
             messages.success(request, 'The new core was succesfully created!')
-            return redirect('/all-trainings/')
+            return redirect('/home/')
         else:
             messages.error(request, 'Please correct the error bellow')
     else:
@@ -95,7 +185,7 @@ def create_cool_down(request):
         if cool_downform.is_valid():  
             cool_downform.save()
             messages.success(request, 'The new training was succesfully created!')
-            return redirect('/all-trainings/')
+            return redirect('/home/')
         else:
             messages.error(request, 'Please correct the error bellow')
     else:
@@ -113,7 +203,7 @@ def plan_training(request):
         if training_form.is_valid():
             training_form.save()
             messages.success(request, 'The new training was succesfully created!')
-            return redirect('/all-trainings/')
+            return redirect('/calendar/')
         else:
             messages.error(request, 'Please correct the error bellow')
     else:
@@ -148,7 +238,7 @@ def update_training(request, training_id):
 def display_calendar(request):
     all_events = Event.objects.all()
     get_event_types = Training.objects.only('event_type')
-    all_trainings = Training.objects.all()
+    all_trainings = Training.objects.filter(is_standard=False)
 
     # if filters applied then get parameter and filter based on condition else return object
     # code from graduaid app.
