@@ -10,12 +10,12 @@
 <script src="{% static "home/lib/jquery-3.3.1.min.js" %}"></script>
 <script src="{% static "home/lib/moment.js" %} "></script>
 <script src="{% static "home/lib/fullcalendar.js" %}"></script>
-<script type="text/javascript" src="http://cdn.jsdelivr.net/qtip2/3.0.3/jquery.qtip.min.js"></script>
 
 <script>
 $(document).ready(function() {
     $('#calendar').fullCalendar({
-        defaultDate: '2018-06-14',
+        /* defaultDate: '2018-06-14', */
+        firstDay: 1, /* start week on monday*/
         editable: true,
         eventLimit: true, // allow "more" link when too many events
         header: {
@@ -36,7 +36,7 @@ $(document).ready(function() {
             {% endfor %}
             {% for i in trainings %}
             {
-                title: "{{ i.location }}",
+                title: "{{ i.start_time }} - {{ i.location }}",
                 start: '{{ i.date|date:"Y-m-d" }}',
                 end: '{{ i.date|date:"Y-m-d" }}',
                 url: "/training-detail/{{ i.id }}/",
@@ -46,6 +46,8 @@ $(document).ready(function() {
             },
             {% endfor %}
         ],
+        weekNumbers: true,
+        weekNumbersWithinDays: true,
     });
 });
 </script>
