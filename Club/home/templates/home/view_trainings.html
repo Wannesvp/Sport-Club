@@ -8,8 +8,42 @@
 <div class="container">
     <h1>List of all standard trainings</h1>
     <ul>
-        {% for training in trainings %}
+        {% for training in trainings_standard %}
             <a href="/training-detail/{{training.id}}/"><li>{{ training }}</li></a>
+        {% endfor %}
+    </ul>
+    <h1>List of planned trainings this week</h1>
+    <a href="/training-detail/all/subscribe">signup for all future trainings</a>
+    <ul>
+        {% for training,user_is_present in trainings_future_dict.items %}
+            <li><a href="/training-detail/{{training.id}}/">{{ training }}</a> -
+                {% if user_is_present %} <a href="/training-detail/{{ training.id }}/unsubscribe"> present - unsubscribe </a>
+                {% else %} <a href="/training-detail/{{ training.id }}/subscribe">signup </a>
+                {% endif %}
+            </li>
+            <ul>
+                <li>{{ training.date }}</li>
+                <li>{{ training.location }}</li>
+                <li>{{ training.core.content_1 }}</li>
+                <li>{{ user_is_present }}</li>      
+            </ul>
+        {% endfor %}
+    </ul>
+    <h1>List of planned trainings next week</h1>
+    <a href="/training-detail/all/subscribe">signup for all future trainings</a>
+    <ul>
+        {% for training,user_is_present in trainings_future_dict.items %}
+            <li><a href="/training-detail/{{training.id}}/">{{ training }}</a> -
+                {% if user_is_present %} <a href="/training-detail/{{ training.id }}/unsubscribe"> present - unsubscribe </a>
+                {% else %} <a href="/training-detail/{{ training.id }}/subscribe">signup </a>
+                {% endif %}
+            </li>
+            <ul>
+                <li>{{ training.date }}</li>
+                <li>{{ training.location }}</li>
+                <li>{{ training.core.content_1 }}</li>
+                <li>{{ user_is_present }}</li>      
+            </ul>
         {% endfor %}
     </ul>
 </div>    

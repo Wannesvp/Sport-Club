@@ -17,8 +17,27 @@ def home(request):
 
 @login_required
 def display_trainings(request):
-    trainings = Training.objects.filter(is_standard=True)
-    return render(request, 'home/view_trainings.html', {'trainings': trainings})
+    trainings_standard = Training.objects.filter(is_standard=True).order_by('date')
+    trainings_future = Training.objects.filter(is_standard=False).order_by('date')
+
+    trainings_future_dict= {}
+    for training in trainings_future:
+        trainers = training.trainers.all()
+        riders = training.riders.all()
+        user_is_present = None
+        if request.user.profile in trainers:
+            user_is_present = "trainer"
+        if request.user.profile in riders:
+            user_is_present = "rider"
+        if request.user.profile in riders and request.user.profile in trainers:
+            user_is_present = "rider & trainer"
+        trainings_future_dict[training] = user_is_present
+    context = {
+        'trainings_standard': trainings_standard,
+        'trainings_future': trainings_future,
+        'trainings_future_dict': trainings_future_dict,
+    }
+    return render(request, 'home/view_trainings.html', context)
 
 @login_required
 def display_training(request, training_id):
@@ -38,6 +57,13 @@ def training_subscribe(request, training_id):
     training = get_object_or_404(Training, pk=training_id)
     training.riders.add(request.user.profile)
     return redirect('/training-detail/' + training_id + '/')
+
+
+def training_subscribe_all(request):
+    trainings = Training.objects.filter(is_standard=False)
+    for training in trainings:
+        training.riders.add(request.user.profile)
+    return redirect('/all-trainings/')
 
 
 def training_unsubscribe(request, training_id):
