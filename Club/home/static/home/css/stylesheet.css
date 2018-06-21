@@ -103,6 +103,12 @@ ul.nav li a:hover, ul.nav li a:active,  ul.nav li a:focus {
   display: inline-block;
 }
 
+.half {
+  width: 400px;
+  display: inline-block;
+  vertical-align: top;
+}
+
 .week-training-element {
   background-color: lightblue;
   border: 2px solid rgb(46, 133, 161);
