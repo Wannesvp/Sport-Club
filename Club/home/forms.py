@@ -17,7 +17,7 @@ class ProfileForm(forms.ModelForm):
 class TrainingForm(forms.ModelForm):
     class Meta:
         model = Training
-        fields = ('name', 'is_standard', 'date', 'start_time', 'end_time','location', 'warm_up', 'core', 'cool_down')
+        fields = ('name', 'is_standard', 'date', 'start_time', 'end_time','location', 'trainers', 'riders', 'warm_up', 'core', 'cool_down')
 
 
 class Warm_upForm(forms.ModelForm):
