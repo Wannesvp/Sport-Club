@@ -20,24 +20,72 @@
 
 
 <div class="container">
-    <h1>Warm up</h1>
     <form method="post">
         {% csrf_token %}
-        {{ warm_upform.as_p }}
+        
+        <h1>Warm up</h1>
+        <div class="fieldWrapper">
+            {{ warm_upform.name.errors }}
+            <label for="{{ form.subject.id_for_label }}">Name:</label>
+            <p>{{ warm_upform.name }}</p>
+        </div>
+        <div class="fieldWrapper half">
+            {{ warm_upform.content_repeat.errors }}
+            <label for="{{ form.message.id_for_label }}">Aantal keer:</label>
+            <p id="is_standard">{{ warm_upform.content_repeat }}</p>
+        </div>
+        <div class="fieldWrapper half">
+            {{ warm_upform.content.errors }}
+            <label for="{{ form.message.id_for_label }}">Content:</label>
+            <p id="is_standard">{{ warm_upform.content }}</p>
+        </div>
+
         <h1>Core</h1>
-        {{ coreform.as_p }}
+        <div class="fieldWrapper">
+            {{ coreform.name.errors }}
+            <label for="{{ form.subject.id_for_label }}">Name:</label>
+            <p>{{ coreform.name }}</p>
+        </div>
+        <div class="fieldWrapper half">
+            {{ coreform.content_1_repeat.errors }}
+            <label for="{{ form.subject.id_for_label }}">Aantal keer:</label>
+            <p>{{ coreform.content_1_repeat }}</p>
+        </div>
+        <div class="fieldWrapper half">
+            {{ coreform.content_1.errors }}
+            <label for="{{ form.subject.id_for_label }}">Content 1:</label>
+            <p>{{ coreform.content_1 }}</p>
+        </div>
+        <hr>
+        <div class="fieldWrapper half">
+            {{ coreform.content_2_repeat.errors }}
+            <label for="{{ form.subject.id_for_label }}">Aantal keer:</label>
+            <p>{{ coreform.content_2_repeat }}</p>
+        </div>
+        <div class="fieldWrapper half">
+            {{ coreform.content_2.errors }}
+            <label for="{{ form.subject.id_for_label }}">Content 2:</label>
+            <p>{{ coreform.content_2 }}</p>
+        </div>
+
         <h1>Cool down</h1>
-        {{ cool_downform.as_p }}
+        <div class="fieldWrapper">
+            {{ cool_downform.name.errors }}
+            <label for="{{ form.subject.id_for_label }}">Name:</label>
+            <p>{{ cool_downform.name }}</p>
+        </div>
+        <div class="fieldWrapper half">
+            {{ cool_downform.content_repeat.errors }}
+            <label for="{{ form.message.id_for_label }}">Aantal keer:</label>
+            <p id="is_standard">{{ cool_downform.content_repeat }}</p>
+        </div>
+        <div class="fieldWrapper half">
+            {{ cool_downform.content.errors }}
+            <label for="{{ form.message.id_for_label }}">Content:</label>
+            <p id="is_standard">{{ cool_downform.content }}</p>
+        </div>
+        <hr>
         <button type="submit">Save warm up, core and cool down</button>
     </form>
-
-    <!-- <div class="container">
-        <h1>Core</h1>
-        <form method="post">
-            {% csrf_token %}
-            {{ coreform.as_p }}
-        </form>
-    </div> -->
-
 </div>
 {% endblock content%}

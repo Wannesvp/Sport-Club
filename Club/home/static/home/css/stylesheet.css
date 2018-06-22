@@ -104,7 +104,13 @@ ul.nav li a:hover, ul.nav li a:active,  ul.nav li a:focus {
 }
 
 .half {
-  width: 400px;
+  width: 20%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.third {
+  width: 20%;
   display: inline-block;
   vertical-align: top;
 }
