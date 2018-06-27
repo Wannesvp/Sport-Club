@@ -21,7 +21,7 @@ $(document).ready(function() {
         header: {
             left: 'prev, next today',
             center: 'title',
-            right: 'month, basicWeek, basicDay'
+            right: 'month, listWeek', /* 'month, agendaWeek, basicDay' */
         },
         events: [
             {% for i in events %}
@@ -37,8 +37,8 @@ $(document).ready(function() {
             {% for i in trainings %}
             {
                 title: "{{ i.start_time }} - {{ i.location }}",
-                start: '{{ i.date|date:"Y-m-d" }}',
-                end: '{{ i.date|date:"Y-m-d" }}',
+                start: '{{ i.date|date:"Y-m-d" }}', /* "2018-06-20 08:00 PM",  */
+                end: '{{ i.end_time }}',            /* "2018-06-20 10:00 PM", */
                 url: "/training-detail/{{ i.id }}/",
                 color:"lightblue",
                 textColor: "black",
@@ -66,7 +66,6 @@ $(document).ready(function() {
 </div>
   
 <main>
-    <div style="height:80px;"></div>
     <div style="width:60%; margin-left: 280px;">
         <div id="calendar"></div>
     </div>

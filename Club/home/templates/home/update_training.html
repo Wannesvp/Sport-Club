@@ -12,8 +12,80 @@
 <div class="container">
     <form method="post">
         {% csrf_token %}
-        {{ training_form.as_p }}
+        <!-- {{ training_form.as_p }} -->
+
+        {{ training_form.non_field_errors }}
+        <div class="fieldWrapper">
+            {{ training_form.name.errors }}
+            <label for="{{ form.subject.id_for_label }}">Name:</label>
+            <p>{{ training_form.name }}</p>
+        </div>
+        <div class="fieldWrapper">
+            {{ training_form.is_standard.errors }}
+            <label for="{{ form.message.id_for_label }}">Is standard:</label>
+            <p id="is_standard">{{ training_form.is_standard }}</p>
+        </div>
+        <div class="fieldWrapper hideMe" style="display:none;">
+            {{ training_form.location.errors }}
+            <label for="{{ form.message.id_for_label }}">Location:</label>
+            <p>{{ training_form.location }}</p>
+        </div>
+        <hr class="hideMe" style="display:none">
+        <div class="fieldWrapper hideMe third" style="display:none;">
+                {{ training_form.date.errors }}
+                <label for="{{ form.message.id_for_label }}">Date:</label>
+                <p>{{ training_form.date }}</p>
+            </div>
+        <div class="fieldWrapper hideMe third" style="display:none;">
+            {{ training_form.start_time.errors }}
+            <label for="{{ form.message.id_for_label }}">Start Time:</label>
+            <p>{{ training_form.start_time }}</p>
+        </div>
+        <div class="fieldWrapper hideMe third"  style="display:none;">
+            {{ training_form.end_time.errors }}
+            <label for="{{ form.message.id_for_label }}">End Time:</label>
+            <p>{{ training_form.end_time }}</p>
+        </div>
+        <hr class="hideMe" style="display:none">
+        <div class="fieldWrapper hideMe half" style="display:none;">
+            {{ training_form.trainers.errors }}
+            <label for="{{ form.message.id_for_label }}">Trainers:</label>
+            <p>{{ training_form.trainers }}</p>
+        </div>
+        <div class="fieldWrapper hideMe half" style="display:none;">
+            {{ training_form.riders.errors }}
+            <label for="{{ form.message.id_for_label }}">Riders:</label>
+            <p>{{ training_form.riders }}</p>
+        </div>
+        <hr class="hideMe" style="display:none">
+        <div class="fieldWrapper">
+            {{ training_form.warm_up.errors }}
+            <label for="{{ form.message.id_for_label }}">Warm Up:</label>
+            <p>{{ training_form.warm_up }}</p>
+        </div>
+        <div class="fieldWrapper">
+                {{ training_form.core.errors }}
+                <label for="{{ form.message.id_for_label }}">Core:</label>
+                <p>{{ training_form.core }}</p>
+            </div>
+        <div class="fieldWrapper">
+            {{ training_form.cool_down.errors }}
+            <label for="{{ form.message.id_for_label }}">Cool Down:</label>
+            <p>{{ training_form.cool_down }}</p>
+        </div>
         <button type="submit">Save changes</button>
     </form>
 </div>
 {% endblock content%}
+
+{% block script %}
+<script>
+$(document).ready(function(){
+    $("#id_is_standard").click(function(){
+        $(".hideMe").toggle();
+    });
+});
+
+
+</script>
+{% endblock script %}
